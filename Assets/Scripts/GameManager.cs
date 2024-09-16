@@ -26,18 +26,23 @@ public class GameManager : MonoBehaviour
     public float waitSecGround = 2.0f; // ボールが地面に接地した時のウェイトタイム
     public float waitSecHit = 2.0f; // ボールが的に当たった時のウェイトタイム
     public TextMeshProUGUI hitText;  // Hit テキスト
+    public TextMeshProUGUI scoreText;  // スコアテキスト
 
     private Mode _mode = 0;
     private float _powerX;
     private float _powerY;
+    private int _score;
 
     void Start()
     {
         _mode = 0;
+        _score = 0;
         _powerX = 0f;
         _powerY = 0f;
         gageX.transform.localScale = new Vector3(0, 1, 1);
         gageY.transform.localScale = new Vector3(0, 1, 1);
+
+        UpdateScoreText();
     }
 
     void Update()
@@ -140,6 +145,10 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(waitSecHit);
 
         hitText.gameObject.SetActive(false);  // テキストを非アクティブに
+
+        _score += 10;
+        UpdateScoreText();
+
         Reset();
     }
 
@@ -154,6 +163,11 @@ public class GameManager : MonoBehaviour
         ball.Reset();
 
         _mode = Mode.MODE_X;
+    }
+
+    private void UpdateScoreText()
+    {
+        scoreText.text = "Score: " + _score;
     }
 
 }
