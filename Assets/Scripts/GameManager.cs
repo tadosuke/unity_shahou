@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
+
 
 public class GameManager : MonoBehaviour
 {
@@ -22,6 +24,8 @@ public class GameManager : MonoBehaviour
     public float forceMultiplierX = 10.0f;  // 力の倍率X
     public float forceMultiplierY = 10.0f;  // 力の倍率Y
     public float waitSecGround = 2.0f; // ボールが地面に接地した時のウェイトタイム
+    public float waitSecHit = 2.0f; // ボールが的に当たった時のウェイトタイム
+    public TextMeshProUGUI hitText;  // Hit テキスト
 
     private Mode _mode = 0;
     private float _powerX;
@@ -104,6 +108,7 @@ public class GameManager : MonoBehaviour
         {
             return;
         }
+        _mode = Mode.MODE_OUT;
 
         StartCoroutine(ResetAfterWait());  // コルーチンの開始
     }
@@ -111,21 +116,44 @@ public class GameManager : MonoBehaviour
     // コルーチン：waitSecGround だけ待ってからリセット
     private IEnumerator ResetAfterWait()
     {
-        yield return new WaitForSeconds(waitSecGround);  // waitSecGround秒待つ
+        yield return new WaitForSeconds(waitSecGround);
 
-        // リセット
-        _powerX = 0f;
-        _powerY = 0f;
-        gageX.transform.localScale = new Vector3(0, 1, 1);
-        gageY.transform.localScale = new Vector3(0, 1, 1);
-        ball.Reset();
-        _mode = Mode.MODE_X;
+        Reset();
     }
 
     // ボールが的と衝突したときに呼ばれる
     public void OnBallHitTarget()
     {
-        Debug.Log("Hit!");
+        // 飛行中でなければ無視
+        if (_mode != Mode.MODE_FLYING)
+        {
+            return;
+        }
+        _mode = Mode.MODE_HIT;
+
+        StartCoroutine(ShowHitText());  // テキスト表示コルーチンを呼ぶ
+    }
+
+    private IEnumerator ShowHitText()
+    {
+        hitText.gameObject.SetActive(true);  // テキストをアクティブに
+        yield return new WaitForSeconds(waitSecHit);
+
+        hitText.gameObject.SetActive(false);  // テキストを非アクティブに
+        Reset();
+    }
+
+    // リセット
+    private void Reset()
+    {
+        _powerX = 0f;
+        _powerY = 0f;
+        var initScale = new Vector3(0, 1, 1);
+        gageX.transform.localScale = initScale;
+        gageY.transform.localScale = initScale;
+        ball.Reset();
+
+        _mode = Mode.MODE_X;
     }
 
 }
