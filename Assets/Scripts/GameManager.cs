@@ -27,11 +27,13 @@ public class GameManager : MonoBehaviour
     public float waitSecHit = 2.0f; // ボールが的に当たった時のウェイトタイム
     public TextMeshProUGUI hitText;  // Hit テキスト
     public TextMeshProUGUI scoreText;  // スコアテキスト
+    public TextMeshProUGUI flyingTimeText;  // 滞空時間テキスト
 
     private Mode _mode = 0;
     private float _powerX;
     private float _powerY;
     private int _score;
+    private float _flyingTime;
 
     void Start()
     {
@@ -39,6 +41,7 @@ public class GameManager : MonoBehaviour
         _score = 0;
         _powerX = 0f;
         _powerY = 0f;
+        _flyingTime = 0;
         gageX.transform.localScale = new Vector3(0, 1, 1);
         gageY.transform.localScale = new Vector3(0, 1, 1);
 
@@ -51,6 +54,7 @@ public class GameManager : MonoBehaviour
         {
             case Mode.MODE_X: UpdateX(); break;
             case Mode.MODE_Y: UpdateY(); break;
+            case Mode.MODE_FLYING: UpdateFlying(); break;
         }
     }
 
@@ -78,6 +82,14 @@ public class GameManager : MonoBehaviour
         Vector3 scale = gageY.transform.localScale;
         scale.x = _powerY / 100f;  // X方向のスケールを変更
         gageY.transform.localScale = scale;
+
+    }
+
+    private void UpdateFlying()
+    {
+        _flyingTime += Time.deltaTime;
+
+        flyingTimeText.text = "+" + (int)(_flyingTime * 10f);
     }
 
     // クリックされた時に外部から呼ばれる
@@ -103,6 +115,9 @@ public class GameManager : MonoBehaviour
         Vector3 force = new Vector3(_powerX * forceMultiplierX, _powerY * forceMultiplierY, 0);
         var rb = ball.GetComponent<Rigidbody>();
         rb.AddForce(force, ForceMode.Impulse);
+
+        // 滞空時間テキストを ON
+        flyingTimeText.gameObject.SetActive(true);
     }
 
     // ボールが地面と接地したときに呼ばれる
@@ -146,7 +161,7 @@ public class GameManager : MonoBehaviour
 
         hitText.gameObject.SetActive(false);  // テキストを非アクティブに
 
-        _score += 10;
+        _score += (int)(_flyingTime * 10f);
         UpdateScoreText();
 
         Reset();
@@ -161,6 +176,8 @@ public class GameManager : MonoBehaviour
         gageX.transform.localScale = initScale;
         gageY.transform.localScale = initScale;
         ball.Reset();
+        _flyingTime = 0f;
+        flyingTimeText.gameObject.SetActive(false);
 
         _mode = Mode.MODE_X;
     }
