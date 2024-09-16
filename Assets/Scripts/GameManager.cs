@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using TMPro;
 
 
@@ -25,11 +26,13 @@ public class GameManager : MonoBehaviour
     public float forceMultiplierY = 10.0f;  // 力の倍率Y
     public float waitSecGround = 2.0f; // ボールが地面に接地した時のウェイトタイム
     public float waitSecHit = 2.0f; // ボールが的に当たった時のウェイトタイム
+    public float waitSecTimeup = 2.0f; // 時間切れ表示のウェイトタイム
     public float time;  // 残り時間
     public TextMeshProUGUI hitText;  // Hit テキスト
     public TextMeshProUGUI scoreText;  // スコアテキスト
     public TextMeshProUGUI flyingTimeText;  // 滞空時間テキスト
     public TextMeshProUGUI timeText;  // 残り時間テキスト
+    public TextMeshProUGUI timeupText;  // 時間切れテキスト
 
     private Mode _mode = 0;  // ゲームモード
     private float _powerX;  // Xパワー
@@ -46,6 +49,7 @@ public class GameManager : MonoBehaviour
         _flyingTime = 0;
         gageX.transform.localScale = new Vector3(0, 1, 1);
         gageY.transform.localScale = new Vector3(0, 1, 1);
+        timeupText.gameObject.SetActive(false);
 
         UpdateScoreText();
     }
@@ -57,6 +61,7 @@ public class GameManager : MonoBehaviour
             case Mode.MODE_X: UpdateX(); break;
             case Mode.MODE_Y: UpdateY(); break;
             case Mode.MODE_FLYING: UpdateFlying(); break;
+            case Mode.MODE_TIMEUP: UpdateTimeup(); break;
         }
     }
 
@@ -98,12 +103,32 @@ public class GameManager : MonoBehaviour
         flyingTimeText.text = "+" + (int)(_flyingTime * 10f);
     }
 
+    private void UpdateTimeup()
+    {
+        StartCoroutine(GotoResultAfterWait());  // コルーチンの開始
+    }
+
+    // コルーチン：waitSecTimeup だけ待ってからリセット
+    private IEnumerator GotoResultAfterWait()
+    {
+        yield return new WaitForSeconds(waitSecTimeup);
+
+        // スコアを保存
+        PlayerPrefs.SetInt("Score", _score);  
+        PlayerPrefs.Save();
+
+        // リザルトシーンへ遷移
+        SceneManager.LoadScene("ResultScene");
+    }
+
     private void UpdateTimer()
     {
         time -= Time.deltaTime;
         if(time <= 0)
         {
             time = 0;
+            timeupText.gameObject.SetActive(true);
+            _mode = Mode.MODE_TIMEUP;
         }
 
         timeText.text = "Time: " + (int)time;
