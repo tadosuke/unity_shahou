@@ -122,24 +122,17 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &153388254 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 303262865958431368, guid: c1dead38081ccb04f99efa02c7a09a09, type: 3}
+--- !u!114 &153388260 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5634469043154570449, guid: c1dead38081ccb04f99efa02c7a09a09, type: 3}
   m_PrefabInstance: {fileID: 6466702164688577390}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &153388260
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 153388254}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bbd1c04f4fb1a9e458d3fa3c0309e668, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameManager: {fileID: 555958495}
 --- !u!1 &173729776
 GameObject:
   m_ObjectHideFlags: 0
@@ -361,8 +354,8 @@ Transform:
   m_GameObject: {fileID: 549096885}
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 56.4, y: -0.55, z: -0}
-  m_LocalScale: {x: 200, y: 10, z: 1}
+  m_LocalPosition: {x: 56.4, y: -11.0135, z: -0}
+  m_LocalScale: {x: 200, y: 10, z: 21.9271}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -422,7 +415,7 @@ MonoBehaviour:
   gageSpeed: 50
   ball: {fileID: 153388260}
   forceMultiplierX: 0.5
-  forceMultiplierY: 0.5
+  forceMultiplierY: 0.6
   waitSecGround: 2
 --- !u!4 &555958496
 Transform:
@@ -681,8 +674,8 @@ Camera:
   m_GameObject: {fileID: 963194225}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0, g: 0.7780387, b: 0.9150943, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -1017,10 +1010,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ball
       objectReference: {fileID: 0}
-    - target: {fileID: 303262865958431368, guid: c1dead38081ccb04f99efa02c7a09a09, type: 3}
-      propertyPath: m_TagString
-      value: Player
-      objectReference: {fileID: 0}
+    - target: {fileID: 5634469043154570449, guid: c1dead38081ccb04f99efa02c7a09a09, type: 3}
+      propertyPath: gameManager
+      value: 
+      objectReference: {fileID: 555958495}
     - target: {fileID: 7794439836940152580, guid: c1dead38081ccb04f99efa02c7a09a09, type: 3}
       propertyPath: m_LocalPosition.x
       value: -9.87
@@ -1064,10 +1057,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 303262865958431368, guid: c1dead38081ccb04f99efa02c7a09a09, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 153388260}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c1dead38081ccb04f99efa02c7a09a09, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
