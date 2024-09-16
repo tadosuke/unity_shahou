@@ -25,15 +25,17 @@ public class GameManager : MonoBehaviour
     public float forceMultiplierY = 10.0f;  // 力の倍率Y
     public float waitSecGround = 2.0f; // ボールが地面に接地した時のウェイトタイム
     public float waitSecHit = 2.0f; // ボールが的に当たった時のウェイトタイム
+    public float time;  // 残り時間
     public TextMeshProUGUI hitText;  // Hit テキスト
     public TextMeshProUGUI scoreText;  // スコアテキスト
     public TextMeshProUGUI flyingTimeText;  // 滞空時間テキスト
+    public TextMeshProUGUI timeText;  // 残り時間テキスト
 
-    private Mode _mode = 0;
-    private float _powerX;
-    private float _powerY;
-    private int _score;
-    private float _flyingTime;
+    private Mode _mode = 0;  // ゲームモード
+    private float _powerX;  // Xパワー
+    private float _powerY;  // Yパワー
+    private int _score;  // スコア
+    private float _flyingTime;  // 滞空時間
 
     void Start()
     {
@@ -66,6 +68,8 @@ public class GameManager : MonoBehaviour
             _powerX = 0f;
         }
 
+        UpdateTimer();
+
         Vector3 scale = gageX.transform.localScale;
         scale.x = _powerX / 100f;  // X方向のスケールを変更
         gageX.transform.localScale = scale;
@@ -79,6 +83,8 @@ public class GameManager : MonoBehaviour
             _powerY = 0f;
         }
 
+        UpdateTimer();
+
         Vector3 scale = gageY.transform.localScale;
         scale.x = _powerY / 100f;  // X方向のスケールを変更
         gageY.transform.localScale = scale;
@@ -90,6 +96,17 @@ public class GameManager : MonoBehaviour
         _flyingTime += Time.deltaTime;
 
         flyingTimeText.text = "+" + (int)(_flyingTime * 10f);
+    }
+
+    private void UpdateTimer()
+    {
+        time -= Time.deltaTime;
+        if(time <= 0)
+        {
+            time = 0;
+        }
+
+        timeText.text = "Time: " + (int)time;
     }
 
     // クリックされた時に外部から呼ばれる
