@@ -122,4 +122,10 @@ public class GameManager : MonoBehaviour
         _mode = Mode.MODE_X;
     }
 
+    // ƒ{[ƒ‹‚ª“I‚ÆÕ“Ë‚µ‚½‚Æ‚«‚ÉŒÄ‚Î‚ê‚é
+    public void OnBallHitTarget()
+    {
+        Debug.Log("Hit!");
+    }
+
 }
