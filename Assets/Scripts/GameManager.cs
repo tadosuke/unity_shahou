@@ -31,15 +31,19 @@ public class GameManager : MonoBehaviour
     public float time;  // 残り時間
     public TextMeshProUGUI hitText;  // Hit テキスト
     public TextMeshProUGUI scoreText;  // スコアテキスト
+    public TextMeshProUGUI windText;  // 風速テキスト
     public TextMeshProUGUI flyingTimeText;  // 滞空時間テキスト
     public TextMeshProUGUI timeText;  // 残り時間テキスト
     public TextMeshProUGUI timeupText;  // 時間切れテキスト
+    public float windMultiplier = 0.0f;  // 風の倍率
 
     private Mode _mode = 0;  // ゲームモード
     private float _powerX;  // Xパワー
     private float _powerY;  // Yパワー
     private int _score;  // スコア
     private float _flyingTime;  // 滞空時間
+    private int _wind; // 風力
+    private Rigidbody _ballRigidbody;
 
     void Start()
     {
@@ -48,6 +52,9 @@ public class GameManager : MonoBehaviour
         _powerX = 0f;
         _powerY = 0f;
         _flyingTime = 0;
+        _wind = Random.Range(-10, 10);
+        _ballRigidbody = ball.GetComponent<Rigidbody>();
+
         gageX.transform.localScale = new Vector3(0, 1, 1);
         gageY.transform.localScale = new Vector3(0, 1, 1);
         timeupText.gameObject.SetActive(false);
@@ -99,8 +106,12 @@ public class GameManager : MonoBehaviour
 
     private void UpdateFlying()
     {
-        _flyingTime += Time.deltaTime;
+        // ボールに風の影響を与える
+        Vector3 force = new Vector3(_wind * windMultiplier, 0, 0);
+        _ballRigidbody.AddForce(force, ForceMode.Force);
 
+        // 滞空時間の更新
+        _flyingTime += Time.deltaTime;
         flyingTimeText.text = "+" + (int)(_flyingTime * 10f);
     }
 
@@ -156,8 +167,7 @@ public class GameManager : MonoBehaviour
 
         // Apply force to the ball
         Vector3 force = new Vector3(_powerX * forceMultiplierX, _powerY * forceMultiplierY, 0);
-        var rb = ball.GetComponent<Rigidbody>();
-        rb.AddForce(force, ForceMode.Impulse);
+        _ballRigidbody.AddForce(force, ForceMode.Impulse);
 
         // 滞空時間テキストを ON
         flyingTimeText.gameObject.SetActive(true);
@@ -220,6 +230,10 @@ public class GameManager : MonoBehaviour
         gageY.transform.localScale = initScale;
         ball.Reset();
         target.ResetPosition();
+
+        _wind = Random.Range(-10, 10);
+        UpdateWindText();
+
         _flyingTime = 0f;
         flyingTimeText.gameObject.SetActive(false);
 
@@ -229,6 +243,11 @@ public class GameManager : MonoBehaviour
     private void UpdateScoreText()
     {
         scoreText.text = "Score: " + _score;
+    }
+
+    private void UpdateWindText()
+    {
+        windText.text = "Wind: " + _wind;
     }
 
 }
