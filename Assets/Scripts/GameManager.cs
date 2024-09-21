@@ -60,6 +60,7 @@ public class GameManager : MonoBehaviour
         gageY.transform.localScale = new Vector3(0, 1, 1);
         timeupText.gameObject.SetActive(false);
 
+        UpdateWindText();
         UpdateScoreText();
     }
 
