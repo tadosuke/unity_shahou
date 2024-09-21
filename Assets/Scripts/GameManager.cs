@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviour
     public Image gageY;
     public float gageSpeed = 1.0f;  // ゲージの増加スピード
     public Ball ball;
+    public Target target;
     public float forceMultiplierX = 10.0f;  // 力の倍率X
     public float forceMultiplierY = 10.0f;  // 力の倍率Y
     public float waitSecGround = 2.0f; // ボールが地面に接地した時のウェイトタイム
@@ -218,6 +219,7 @@ public class GameManager : MonoBehaviour
         gageX.transform.localScale = initScale;
         gageY.transform.localScale = initScale;
         ball.Reset();
+        target.ResetPosition();
         _flyingTime = 0f;
         flyingTimeText.gameObject.SetActive(false);
 
