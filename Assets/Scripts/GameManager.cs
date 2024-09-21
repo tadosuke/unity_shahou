@@ -146,8 +146,8 @@ public class GameManager : MonoBehaviour
         timeText.text = "Time: " + (int)time;
     }
 
-    // クリックされた時に外部から呼ばれる
-    public void OnClick()
+    // ボタンが押されたときに外部から呼ばれる
+    public void OnPressed()
     {
         switch (_mode)
         {
