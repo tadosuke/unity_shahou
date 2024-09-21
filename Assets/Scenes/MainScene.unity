@@ -956,7 +956,7 @@ MonoBehaviour:
   waitSecGround: 2
   waitSecHit: 2
   waitSecTimeup: 2
-  time: 60
+  time: 30
   hitText: {fileID: 291717418}
   scoreText: {fileID: 273377783}
   windText: {fileID: 182139057}
