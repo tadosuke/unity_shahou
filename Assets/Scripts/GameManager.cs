@@ -45,6 +45,7 @@ public class GameManager : MonoBehaviour
     private int _wind; // 風力
     private Rigidbody _ballRigidbody;
 
+    // 開始
     void Start()
     {
         _mode = 0;
@@ -62,6 +63,7 @@ public class GameManager : MonoBehaviour
         UpdateScoreText();
     }
 
+    // 更新
     void Update()
     {
         switch(_mode)
@@ -73,6 +75,43 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    // ボタンが押されたときに外部から呼ばれる
+    public void OnPressed()
+    {
+        switch (_mode)
+        {
+            case Mode.MODE_X: OnClickX(); break;
+            case Mode.MODE_Y: OnClickY(); break;
+        }
+    }
+
+    // ボールが地面と接地したときに呼ばれる
+    public void OnBallHitGround()
+    {
+        // 飛行中でなければ無視
+        if(_mode != Mode.MODE_FLYING)
+        {
+            return;
+        }
+        _mode = Mode.MODE_OUT;
+
+        StartCoroutine(ResetAfterWait());  // コルーチンの開始
+    }
+
+    // ボールが的と衝突したときに呼ばれる
+    public void OnBallHitTarget()
+    {
+        // 飛行中でなければ無視
+        if (_mode != Mode.MODE_FLYING)
+        {
+            return;
+        }
+        _mode = Mode.MODE_HIT;
+
+        StartCoroutine(ShowHitText());  // テキスト表示コルーチンを呼ぶ
+    }
+
+    // 更新：横パワー
     private void UpdateX()
     {
         _powerX += gageSpeed * Time.deltaTime;
@@ -88,6 +127,7 @@ public class GameManager : MonoBehaviour
         gageX.transform.localScale = scale;
     }
 
+    // 更新：縦パワー
     private void UpdateY()
     {
         _powerY += gageSpeed * Time.deltaTime;
@@ -104,6 +144,7 @@ public class GameManager : MonoBehaviour
 
     }
 
+    // 更新：飛行中
     private void UpdateFlying()
     {
         // ボールに風の影響を与える
@@ -115,6 +156,7 @@ public class GameManager : MonoBehaviour
         flyingTimeText.text = "+" + (int)(_flyingTime * 10f);
     }
 
+    // 時間切れ演出
     private void UpdateTimeup()
     {
         StartCoroutine(GotoResultAfterWait());  // コルーチンの開始
@@ -126,17 +168,18 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(waitSecTimeup);
 
         // スコアを保存
-        PlayerPrefs.SetInt("Score", _score);  
+        PlayerPrefs.SetInt("Score", _score);
         PlayerPrefs.Save();
 
         // リザルトシーンへ遷移
         SceneManager.LoadScene("ResultScene");
     }
 
+    // タイマーの更新
     private void UpdateTimer()
     {
         time -= Time.deltaTime;
-        if(time <= 0)
+        if (time <= 0)
         {
             time = 0;
             timeupText.gameObject.SetActive(true);
@@ -146,44 +189,27 @@ public class GameManager : MonoBehaviour
         timeText.text = "Time: " + (int)time;
     }
 
-    // ボタンが押されたときに外部から呼ばれる
-    public void OnPressed()
-    {
-        switch (_mode)
-        {
-            case Mode.MODE_X: OnClickX(); break;
-            case Mode.MODE_Y: OnClickY(); break;
-        }
-    }
-
+    // 横パワーの決定
     private void OnClickX()
     {
         _mode = Mode.MODE_Y;
     }
 
+    // 縦パワーの決定
     private void OnClickY()
     {
         _mode = Mode.MODE_FLYING;
 
-        // Apply force to the ball
+        // ボールに縦横パワーを与えて飛ばす
         Vector3 force = new Vector3(_powerX * forceMultiplierX, _powerY * forceMultiplierY, 0);
         _ballRigidbody.AddForce(force, ForceMode.Impulse);
 
+        // 自然な見た目になるように、適当に回転を加える
+        Vector3 torque = new Vector3(0, 0, _powerX + _powerY);
+        _ballRigidbody.AddTorque(torque, ForceMode.Impulse);
+
         // 滞空時間テキストを ON
         flyingTimeText.gameObject.SetActive(true);
-    }
-
-    // ボールが地面と接地したときに呼ばれる
-    public void OnBallHitGround()
-    {
-        // 飛行中でなければ無視
-        if(_mode != Mode.MODE_FLYING)
-        {
-            return;
-        }
-        _mode = Mode.MODE_OUT;
-
-        StartCoroutine(ResetAfterWait());  // コルーチンの開始
     }
 
     // コルーチン：waitSecGround だけ待ってからリセット
@@ -194,19 +220,7 @@ public class GameManager : MonoBehaviour
         Reset();
     }
 
-    // ボールが的と衝突したときに呼ばれる
-    public void OnBallHitTarget()
-    {
-        // 飛行中でなければ無視
-        if (_mode != Mode.MODE_FLYING)
-        {
-            return;
-        }
-        _mode = Mode.MODE_HIT;
-
-        StartCoroutine(ShowHitText());  // テキスト表示コルーチンを呼ぶ
-    }
-
+    // Hit テキストを表示する
     private IEnumerator ShowHitText()
     {
         hitText.gameObject.SetActive(true);  // テキストをアクティブに
@@ -240,11 +254,13 @@ public class GameManager : MonoBehaviour
         _mode = Mode.MODE_X;
     }
 
+    // スコアテキストの更新
     private void UpdateScoreText()
     {
         scoreText.text = "Score: " + _score;
     }
 
+    // 風テキストの更新
     private void UpdateWindText()
     {
         windText.text = "Wind: " + _wind;
