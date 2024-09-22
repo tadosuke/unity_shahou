@@ -44,6 +44,7 @@ public class GameManager : MonoBehaviour
     private float _flyingTime;  // 滞空時間
     private int _wind; // 風力
     private Rigidbody _ballRigidbody;
+    private TrailRenderer _ballTrail;
 
     // 開始
     void Start()
@@ -55,6 +56,7 @@ public class GameManager : MonoBehaviour
         _flyingTime = 0;
         _wind = Random.Range(-10, 10);
         _ballRigidbody = ball.GetComponent<Rigidbody>();
+        _ballTrail = ball.GetComponent<TrailRenderer>();
 
         gageX.transform.localScale = new Vector3(0, 1, 1);
         gageY.transform.localScale = new Vector3(0, 1, 1);
@@ -209,6 +211,9 @@ public class GameManager : MonoBehaviour
         Vector3 torque = new Vector3(0, 0, _powerX + _powerY);
         _ballRigidbody.AddTorque(torque, ForceMode.Impulse);
 
+        // 軌跡を ON
+        _ballTrail.enabled = true;
+
         // 滞空時間テキストを ON
         flyingTimeText.gameObject.SetActive(true);
     }
@@ -251,6 +256,10 @@ public class GameManager : MonoBehaviour
 
         _flyingTime = 0f;
         flyingTimeText.gameObject.SetActive(false);
+
+        // 軌跡を OFF
+        _ballTrail.Clear();
+        _ballTrail.enabled = false;
 
         _mode = Mode.MODE_X;
     }
