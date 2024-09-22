@@ -23,8 +23,6 @@ public class GameManager : MonoBehaviour
     public float gageSpeed = 1.0f;  // ゲージの増加スピード
     public Ball ball;
     public Target target;
-    public float forceMultiplierX = 10.0f;  // 力の倍率X
-    public float forceMultiplierY = 10.0f;  // 力の倍率Y
     public float waitSecGround = 2.0f; // ボールが地面に接地した時のウェイトタイム
     public float waitSecHit = 2.0f; // ボールが的に当たった時のウェイトタイム
     public float waitSecTimeup = 2.0f; // 時間切れ表示のウェイトタイム
@@ -44,7 +42,6 @@ public class GameManager : MonoBehaviour
     private float _flyingTime;  // 滞空時間
     private int _wind; // 風力
     private Rigidbody _ballRigidbody;
-    private TrailRenderer _ballTrail;
 
     // 開始
     void Start()
@@ -56,7 +53,6 @@ public class GameManager : MonoBehaviour
         _flyingTime = 0;
         _wind = Random.Range(-10, 10);
         _ballRigidbody = ball.GetComponent<Rigidbody>();
-        _ballTrail = ball.GetComponent<TrailRenderer>();
 
         gageX.transform.localScale = new Vector3(0, 1, 1);
         gageY.transform.localScale = new Vector3(0, 1, 1);
@@ -203,16 +199,8 @@ public class GameManager : MonoBehaviour
     {
         _mode = Mode.MODE_FLYING;
 
-        // ボールに縦横パワーを与えて飛ばす
-        Vector3 force = new Vector3(_powerX * forceMultiplierX, _powerY * forceMultiplierY, 0);
-        _ballRigidbody.AddForce(force, ForceMode.Impulse);
-
-        // 自然な見た目になるように、適当に回転を加える
-        Vector3 torque = new Vector3(0, 0, _powerX + _powerY);
-        _ballRigidbody.AddTorque(torque, ForceMode.Impulse);
-
-        // 軌跡を ON
-        _ballTrail.enabled = true;
+        // ボールを蹴る
+        ball.Kick(_powerX, _powerY);
 
         // 滞空時間テキストを ON
         flyingTimeText.gameObject.SetActive(true);
@@ -256,10 +244,6 @@ public class GameManager : MonoBehaviour
 
         _flyingTime = 0f;
         flyingTimeText.gameObject.SetActive(false);
-
-        // 軌跡を OFF
-        _ballTrail.Clear();
-        _ballTrail.enabled = false;
 
         _mode = Mode.MODE_X;
     }
