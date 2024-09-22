@@ -18,15 +18,11 @@ public class GameManager : MonoBehaviour
         MODE_TIMEUP,
     }
 
+    // 参照
     public Image gageX;
     public Image gageY;
-    public float gageSpeed = 1.0f;  // ゲージの増加スピード
     public Ball ball;
     public Target target;
-    public float waitSecGround = 2.0f; // ボールが地面に接地した時のウェイトタイム
-    public float waitSecHit = 2.0f; // ボールが的に当たった時のウェイトタイム
-    public float waitSecTimeup = 2.0f; // 時間切れ表示のウェイトタイム
-    public float time;  // 残り時間
     public TextMeshProUGUI hitText;  // Hit テキスト
     public TextMeshProUGUI scoreText;  // スコアテキスト
     public TextMeshProUGUI windText;  // 風速テキスト
@@ -34,6 +30,14 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI timeText;  // 残り時間テキスト
     public TextMeshProUGUI timeupText;  // 時間切れテキスト
 
+    // 公開パラメータ
+    public float gageSpeed = 1.0f;  // ゲージの増加スピード
+    public float waitSecGround = 2.0f; // ボールが地面に接地した時のウェイトタイム
+    public float waitSecHit = 2.0f; // ボールが的に当たった時のウェイトタイム
+    public float waitSecTimeup = 2.0f; // 時間切れ表示のウェイトタイム
+    public float time;  // 残り時間
+
+    // 非公開パラメータ
     private Mode _mode = 0;  // ゲームモード
     private float _powerX;  // Xパワー
     private float _powerY;  // Yパワー
@@ -154,7 +158,7 @@ public class GameManager : MonoBehaviour
         StartCoroutine(GotoResultAfterWait());  // コルーチンの開始
     }
 
-    // コルーチン：waitSecTimeup だけ待ってからリセット
+    // コルーチン：waitSecTimeup だけ待ってからリザルトへ移行する
     private IEnumerator GotoResultAfterWait()
     {
         yield return new WaitForSeconds(waitSecTimeup);
@@ -207,7 +211,7 @@ public class GameManager : MonoBehaviour
         Reset();
     }
 
-    // Hit テキストを表示する
+    // コルーチン：Hit テキストを表示する
     private IEnumerator ShowHitText()
     {
         hitText.gameObject.SetActive(true);  // テキストをアクティブに
