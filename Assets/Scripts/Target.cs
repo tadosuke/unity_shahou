@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Target : MonoBehaviour
 {
-    public GameManager gameManager;
+    public UnityEvent onBallHitTarget;  // ボールが当たった時のイベント
 
     // ランダムな位置を設定するための変数
     public float minX;
@@ -40,7 +41,7 @@ public class Target : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            gameManager.OnBallHitTarget();
+            onBallHitTarget?.Invoke();
         }
     }
 }
