@@ -5,7 +5,7 @@ using UnityEngine.Events;
 
 public class Target : MonoBehaviour
 {
-    public UnityEvent onBallHitTarget;  // ボールが当たった時のイベント
+    public UnityEvent OnBallHitTarget;  // ボールが当たった時のイベント
 
     // ランダムな位置を設定するための変数
     public float minX;
@@ -41,7 +41,7 @@ public class Target : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            onBallHitTarget?.Invoke();
+            OnBallHitTarget?.Invoke();
         }
     }
 }

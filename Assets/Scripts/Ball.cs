@@ -5,7 +5,7 @@ using UnityEngine.Events;
 
 public class Ball : MonoBehaviour
 {
-    public UnityEvent onGround;  // ボールが地面についた時のイベント
+    public UnityEvent OnGround;  // ボールが地面についた時のイベント
 
     private Vector3 _startPosition;  // 開始時の位置を記録
     private Rigidbody _rigidbody;    // Rigidbody コンポーネント
@@ -27,7 +27,7 @@ public class Ball : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Ground"))
         {
-            onGround?.Invoke();
+            OnGround?.Invoke();
         }
     }
 
