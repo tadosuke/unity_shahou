@@ -8,6 +8,7 @@ public class Ball : MonoBehaviour
     public UnityEvent OnGround;  // ボールが地面についた時のイベント
     public float forceMultiplierX = 10.0f;  // 力の倍率X
     public float forceMultiplierY = 10.0f;  // 力の倍率Y
+    public float windMultiplier = 0.3f;  // 風の倍率
 
     private Vector3 _startPosition;  // 開始時の位置を記録
     private Rigidbody _rigidbody;    // Rigidbody コンポーネント
@@ -38,6 +39,14 @@ public class Ball : MonoBehaviour
 
         // 軌跡を ON
         _trail.enabled = true;
+    }
+
+    // ボールに風の影響を与える
+    public void AddWind(float wind)
+    {
+        Vector3 force = new Vector3(wind * windMultiplier, 0, 0);
+        _rigidbody.AddForce(force, ForceMode.Force);
+
     }
 
     // ボールを開始時の位置にリセットする関数
