@@ -36,12 +36,4 @@ public class Target : MonoBehaviour
         // V‚µ‚¢ˆÊ’u‚ğİ’è
         transform.position = new Vector3(randomX, randomY, currentZ);
     }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            OnBallHitTarget?.Invoke();
-        }
-    }
 }

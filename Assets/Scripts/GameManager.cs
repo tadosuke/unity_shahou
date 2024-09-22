@@ -38,7 +38,6 @@ public class GameManager : MonoBehaviour
     private float _powerX;  // Xパワー
     private float _powerY;  // Yパワー
     private int _score;  // スコア
-    private float _flyingTime;  // 滞空時間
     private int _wind; // 風力
 
     // 開始
@@ -48,7 +47,6 @@ public class GameManager : MonoBehaviour
         _score = 0;
         _powerX = 0f;
         _powerY = 0f;
-        _flyingTime = 0;
         _wind = Random.Range(-10, 10);
 
         gageX.transform.localScale = new Vector3(0, 1, 1);
@@ -146,9 +144,8 @@ public class GameManager : MonoBehaviour
         // ボールに風の影響を与える
         ball.AddWind(_wind);
 
-        // 滞空時間の更新
-        _flyingTime += Time.deltaTime;
-        flyingTimeText.text = "+" + (int)(_flyingTime * 10f);
+        // 滞空時間テキストの更新
+        flyingTimeText.text = "+" + (int)(ball.FlyingTime * 10f);
     }
 
     // 時間切れ演出
@@ -218,7 +215,8 @@ public class GameManager : MonoBehaviour
 
         hitText.gameObject.SetActive(false);  // テキストを非アクティブに
 
-        _score += (int)(_flyingTime * 10f);
+        // 滞空時間をスコアに加算
+        _score += (int)(ball.FlyingTime * 10f);
         UpdateScoreText();
 
         Reset();
@@ -238,7 +236,6 @@ public class GameManager : MonoBehaviour
         _wind = Random.Range(-10, 10);
         UpdateWindText();
 
-        _flyingTime = 0f;
         flyingTimeText.gameObject.SetActive(false);
 
         _mode = Mode.MODE_X;

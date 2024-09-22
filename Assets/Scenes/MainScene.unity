@@ -1025,7 +1025,6 @@ MonoBehaviour:
   flyingTimeText: {fileID: 1973613954}
   timeText: {fileID: 231748566}
   timeupText: {fileID: 1178585621}
-  windMultiplier: 0.3
 --- !u!4 &555958496
 Transform:
   m_ObjectHideFlags: 0
@@ -1155,8 +1154,24 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  OnTarget:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 555958495}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: OnBallHitTarget
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   forceMultiplierX: 0.6
   forceMultiplierY: 0.5
+  windMultiplier: 0.3
 --- !u!54 &671729672
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2198,6 +2213,10 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 798768750113850354, guid: 677ba3c265fdb454a8df4edfe4ddbdd8, type: 3}
       propertyPath: m_Name
+      value: Target
+      objectReference: {fileID: 0}
+    - target: {fileID: 798768750113850354, guid: 677ba3c265fdb454a8df4edfe4ddbdd8, type: 3}
+      propertyPath: m_TagString
       value: Target
       objectReference: {fileID: 0}
     - target: {fileID: 1157887239817707742, guid: 677ba3c265fdb454a8df4edfe4ddbdd8, type: 3}

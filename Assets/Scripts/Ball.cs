@@ -6,6 +6,8 @@ using UnityEngine.Events;
 public class Ball : MonoBehaviour
 {
     public UnityEvent OnGround;  // ボールが地面についた時のイベント
+    public UnityEvent OnTarget;  // ボールが的に当たった時のイベント
+
     public float forceMultiplierX = 10.0f;  // 力の倍率X
     public float forceMultiplierY = 10.0f;  // 力の倍率Y
     public float windMultiplier = 0.3f;  // 風の倍率
@@ -13,6 +15,9 @@ public class Ball : MonoBehaviour
     private Vector3 _startPosition;  // 開始時の位置を記録
     private Rigidbody _rigidbody;    // Rigidbody コンポーネント
     private TrailRenderer _trail;
+    private bool _isGround;  // 接地しているか？
+    private bool _isHit;  // 的に当たったか？
+    private float _flyingTime;  // 滞空時間
 
     // Start is called before the first frame update
     void Start()
@@ -20,12 +25,23 @@ public class Ball : MonoBehaviour
         _rigidbody = GetComponent<Rigidbody>();
         _startPosition = transform.position;  // 開始時の位置を記録
         _trail = GetComponent<TrailRenderer>();
+        _flyingTime = 0.0f;
+        _isGround = true;
+        _isHit = false;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (!_isGround && !_isHit)
+        {
+            // 滞空時間の更新
+            _flyingTime += Time.deltaTime;
+        }
     }
+
+    // 滞空時間
+    public float FlyingTime => _flyingTime;
 
     public void Kick(float powerX, float powerY)
     {
@@ -39,6 +55,9 @@ public class Ball : MonoBehaviour
 
         // 軌跡を ON
         _trail.enabled = true;
+
+        _flyingTime = 0.0f;
+        _isGround = false;
     }
 
     // ボールに風の影響を与える
@@ -62,15 +81,28 @@ public class Ball : MonoBehaviour
         // 軌跡を OFF
         _trail.Clear();
         _trail.enabled = false;
+
+        _flyingTime = 0.0f;
+        _isGround = true;
+        _isHit = false;
     }
 
 
     // コリジョンに入った時に呼ばれる
     private void OnCollisionEnter(Collision collision)
     {
+        if (collision.gameObject.CompareTag("Target"))
+        {
+            _isHit = true;
+            OnTarget?.Invoke();
+            return;
+        }
+
         if (collision.gameObject.CompareTag("Ground"))
         {
+            _isGround = true;
             OnGround?.Invoke();
+            return;
         }
     }
 }
