@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Gage : MonoBehaviour
 {
-    public float gageSpeed = 50.0f;  // ゲージの増加スピード
+    public ConfigSO config;
 
     [SerializeField] private float _power = 0.0f;  // 現在のパワー
     private const float POWER_MAX = 100.0f;  // パワーの最大値
@@ -17,7 +17,7 @@ public class Gage : MonoBehaviour
 
     void Update()
     {
-        _power += gageSpeed * Time.deltaTime;
+        _power += config.gageSpeed * Time.deltaTime;
         if (POWER_MAX < _power)
         {
             _power = 0f;

@@ -30,12 +30,7 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI flyingTimeText;  // 滞空時間テキスト
     public TextMeshProUGUI timeText;  // 残り時間テキスト
     public TextMeshProUGUI timeupText;  // 時間切れテキスト
-
-    // 公開パラメータ
-    public float gageSpeed = 50.0f;  // ゲージの増加スピード
-    public float waitSecGround = 2.0f; // ボールが地面に接地した時のウェイトタイム
-    public float waitSecHit = 2.0f; // ボールが的に当たった時のウェイトタイム
-    public float waitSecTimeup = 2.0f; // 時間切れ表示のウェイトタイム
+    public ConfigSO config;  // ゲーム設定
 
     // 非公開パラメータ
     private Mode _mode;  // ゲームモード
@@ -133,7 +128,7 @@ public class GameManager : MonoBehaviour
     // コルーチン：waitSecTimeup だけ待ってからリザルトへ移行する
     private IEnumerator GotoResultAfterWait()
     {
-        yield return new WaitForSeconds(waitSecTimeup);
+        yield return new WaitForSeconds(config.waitSecTimeup);
 
         // スコアを保存
         PlayerPrefs.SetInt("Score", _score);
@@ -168,7 +163,7 @@ public class GameManager : MonoBehaviour
     // コルーチン：waitSecGround だけ待ってからリセット
     private IEnumerator ResetAfterWait()
     {
-        yield return new WaitForSeconds(waitSecGround);
+        yield return new WaitForSeconds(config.waitSecGround);
 
         Reset();
     }
@@ -177,7 +172,7 @@ public class GameManager : MonoBehaviour
     private IEnumerator ShowHitText()
     {
         hitText.gameObject.SetActive(true);  // テキストをアクティブに
-        yield return new WaitForSeconds(waitSecHit);
+        yield return new WaitForSeconds(config.waitSecHit);
 
         hitText.gameObject.SetActive(false);  // テキストを非アクティブに
 

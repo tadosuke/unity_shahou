@@ -417,6 +417,7 @@ GameObject:
   - component: {fileID: 231748565}
   - component: {fileID: 231748567}
   - component: {fileID: 231748566}
+  - component: {fileID: 231748568}
   m_Layer: 5
   m_Name: 'TimeText '
   m_TagString: Untagged
@@ -540,6 +541,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 231748564}
   m_CullTransparentMesh: 1
+--- !u!114 &231748568
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 231748564}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9ee9eb5edac7a242852b838674bbc22, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  model: {fileID: 1601799873}
 --- !u!1 &273377781
 GameObject:
   m_ObjectHideFlags: 0
@@ -1056,11 +1070,7 @@ MonoBehaviour:
   flyingTimeText: {fileID: 1973613954}
   timeText: {fileID: 231748566}
   timeupText: {fileID: 1178585621}
-  gageSpeed: 50
-  waitSecGround: 2
-  waitSecHit: 2
-  waitSecTimeup: 2
-  time: 30
+  config: {fileID: 11400000, guid: 49418b2947496ae4f876d52873079612, type: 2}
 --- !u!4 &555958496
 Transform:
   m_ObjectHideFlags: 0
@@ -1120,6 +1130,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed02ac00af7b54f4d8fb9074296423a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  config: {fileID: 11400000, guid: 49418b2947496ae4f876d52873079612, type: 2}
   gageSpeed: 50
   _power: 0
 --- !u!1001 &671729669
@@ -1973,6 +1984,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed02ac00af7b54f4d8fb9074296423a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  config: {fileID: 0}
   gageSpeed: 50
   _power: 0
 --- !u!4 &1204258009
