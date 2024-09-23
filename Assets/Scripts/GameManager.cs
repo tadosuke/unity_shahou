@@ -24,7 +24,6 @@ public class GameManager : MonoBehaviour
     public Timer timer;
     public Ball ball;
     public Target target;
-    public TextMeshProUGUI flyingTimeText;  // 滞空時間テキスト
     public ConfigSO config;  // ゲーム設定
     public VariablesSO variables;  // ゲーム変数
 
@@ -111,9 +110,6 @@ public class GameManager : MonoBehaviour
     {
         // ボールに風の影響を与える
         ball.AddWind(variables.wind);
-
-        // 滞空時間テキストの更新
-        flyingTimeText.text = "+" + (int)(ball.FlyingTime * 10f);
     }
 
     // コルーチン：waitSecTimeup だけ待ってからリザルトへ移行する
@@ -148,7 +144,7 @@ public class GameManager : MonoBehaviour
         ball.Kick(gageX.Power, gageY.Power);
 
         // 滞空時間テキストを ON
-        flyingTimeText.gameObject.SetActive(true);
+        variables.showFlyingTimeText = true;
     }
 
     // コルーチン：waitSecGround だけ待ってからリセット
@@ -181,7 +177,7 @@ public class GameManager : MonoBehaviour
 
         variables.wind = Random.Range(-10, 10);
 
-        flyingTimeText.gameObject.SetActive(false);
+        variables.showFlyingTimeText = false;
 
         _mode = Mode.MODE_X;
 

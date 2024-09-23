@@ -12,5 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b684654e38b58141aae8fe91f425215, type: 3}
   m_Name: VariablesSO
   m_EditorClassIdentifier: 
-  score: 0
-  wind: -10
+  score: 4
+  wind: -1
+  showHitText: 0
+  showTimeupText: 0
+  showFlyingTimeText: 0

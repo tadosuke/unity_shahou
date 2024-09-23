@@ -15,4 +15,6 @@ public class VariablesSO : ScriptableObject
     [Header("時間切れテキストを表示するか？")]
     public bool showTimeupText = false;
 
+    [Header("滞空時間テキストを表示するか？")]
+    public bool showFlyingTimeText = false;
 }

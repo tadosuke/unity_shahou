@@ -1106,7 +1106,6 @@ MonoBehaviour:
   timer: {fileID: 1601799873}
   ball: {fileID: 671729671}
   target: {fileID: 1382128437}
-  hitText: {fileID: 291717418}
   flyingTimeText: {fileID: 1973613954}
   config: {fileID: 11400000, guid: 49418b2947496ae4f876d52873079612, type: 2}
   variables: {fileID: 11400000, guid: 877ab5bf860bd884d8af475526368e91, type: 2}
@@ -2270,6 +2269,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1973613953}
   - component: {fileID: 1973613955}
+  - component: {fileID: 1973613956}
   - component: {fileID: 1973613954}
   m_Layer: 5
   m_Name: FlyingTimeText
@@ -2394,6 +2394,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1973613952}
   m_CullTransparentMesh: 1
+--- !u!114 &1973613956
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1973613952}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a47ed12b52587e40b4575a982db41a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  variables: {fileID: 11400000, guid: 877ab5bf860bd884d8af475526368e91, type: 2}
 --- !u!1 &2029460502
 GameObject:
   m_ObjectHideFlags: 0
