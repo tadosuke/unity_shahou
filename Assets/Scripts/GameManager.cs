@@ -24,7 +24,6 @@ public class GameManager : MonoBehaviour
     public Timer timer;
     public Ball ball;
     public Target target;
-    public TextMeshProUGUI hitText;  // Hit テキスト
     public TextMeshProUGUI flyingTimeText;  // 滞空時間テキスト
     public ConfigSO config;  // ゲーム設定
     public VariablesSO variables;  // ゲーム変数
@@ -163,10 +162,10 @@ public class GameManager : MonoBehaviour
     // コルーチン：Hit テキストを表示する
     private IEnumerator ShowHitText()
     {
-        hitText.gameObject.SetActive(true);  // テキストをアクティブに
+        variables.showHitText = true;
         yield return new WaitForSeconds(config.waitSecHit);
 
-        hitText.gameObject.SetActive(false);  // テキストを非アクティブに
+        variables.showHitText = false;
 
         // 滞空時間をスコアに加算
         variables.score += (int)(ball.FlyingTime * 10f);
