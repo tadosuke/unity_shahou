@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour
     // 参照
     public Gage gageX;
     public Gage gageY;
+    public Timer timer;
     public Ball ball;
     public Target target;
     public TextMeshProUGUI hitText;  // Hit テキスト
@@ -35,10 +36,9 @@ public class GameManager : MonoBehaviour
     public float waitSecGround = 2.0f; // ボールが地面に接地した時のウェイトタイム
     public float waitSecHit = 2.0f; // ボールが的に当たった時のウェイトタイム
     public float waitSecTimeup = 2.0f; // 時間切れ表示のウェイトタイム
-    public float time = 30.0f;  // 残り時間
 
     // 非公開パラメータ
-    private Mode _mode = 0;  // ゲームモード
+    private Mode _mode;  // ゲームモード
     private int _score;  // スコア
     private int _wind; // 風力
 
@@ -51,6 +51,7 @@ public class GameManager : MonoBehaviour
 
         gageX.enabled = true;
         gageY.enabled = false;
+        timer.enabled = true;
 
         timeupText.gameObject.SetActive(false);
 
@@ -63,10 +64,7 @@ public class GameManager : MonoBehaviour
     {
         switch(_mode)
         {
-            case Mode.MODE_X: UpdateX(); break;
-            case Mode.MODE_Y: UpdateY(); break;
             case Mode.MODE_FLYING: UpdateFlying(); break;
-            case Mode.MODE_TIMEUP: UpdateTimeup(); break;
         }
     }
 
@@ -88,6 +86,7 @@ public class GameManager : MonoBehaviour
         {
             return;
         }
+        timer.enabled = false;
         _mode = Mode.MODE_OUT;
 
         StartCoroutine(ResetAfterWait());  // コルーチンの開始
@@ -101,21 +100,24 @@ public class GameManager : MonoBehaviour
         {
             return;
         }
+        timer.enabled = false;
         _mode = Mode.MODE_HIT;
 
         StartCoroutine(ShowHitText());  // テキスト表示コルーチンを呼ぶ
     }
 
-    // 更新：横パワー
-    private void UpdateX()
+    // 時間切れ時に呼ばれる
+    public void OnTimeup()
     {
-        UpdateTimer();
-    }
+        gageX.enabled = false;
+        gageY.enabled = false;
+        timer.enabled = false;
 
-    // 更新：縦パワー
-    private void UpdateY()
-    {
-        UpdateTimer();
+        // 時間切れテキストの表示
+        timeupText.gameObject.SetActive(true);
+        _mode = Mode.MODE_TIMEUP;
+
+        StartCoroutine(GotoResultAfterWait());  // コルーチンの開始
     }
 
     // 更新：飛行中
@@ -126,12 +128,6 @@ public class GameManager : MonoBehaviour
 
         // 滞空時間テキストの更新
         flyingTimeText.text = "+" + (int)(ball.FlyingTime * 10f);
-    }
-
-    // 時間切れ演出
-    private void UpdateTimeup()
-    {
-        StartCoroutine(GotoResultAfterWait());  // コルーチンの開始
     }
 
     // コルーチン：waitSecTimeup だけ待ってからリザルトへ移行する
@@ -147,20 +143,6 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene("ResultScene");
     }
 
-    // タイマーの更新
-    private void UpdateTimer()
-    {
-        time -= Time.deltaTime;
-        if (time <= 0)
-        {
-            time = 0;
-            timeupText.gameObject.SetActive(true);
-            _mode = Mode.MODE_TIMEUP;
-        }
-
-        timeText.text = "Time: " + (int)time;
-    }
-
     // 横パワーの決定
     private void OnClickX()
     {
@@ -173,6 +155,7 @@ public class GameManager : MonoBehaviour
     private void OnClickY()
     {
         gageY.enabled = false;
+        timer.enabled = false;
         _mode = Mode.MODE_FLYING;
 
         // ボールを蹴る
@@ -223,6 +206,8 @@ public class GameManager : MonoBehaviour
 
         gageY.enabled = false;
         gageY.Reset();
+
+        timer.enabled = true;
     }
 
     // スコアテキストの更新
