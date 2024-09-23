@@ -19,10 +19,8 @@ public class GameManager : MonoBehaviour
     }
 
     // 参照
-    public Gage gageLogicX;
-    public Gage gageLogicY;
-    public Image gageX;
-    public Image gageY;
+    public Gage gageX;
+    public Gage gageY;
     public Ball ball;
     public Target target;
     public TextMeshProUGUI hitText;  // Hit テキスト
@@ -51,11 +49,8 @@ public class GameManager : MonoBehaviour
         _score = 0;
         _wind = Random.Range(-10, 10);
 
-        gageLogicX.enabled = true;
-        gageX.transform.localScale = new Vector3(0, 1, 1);
-
-        gageLogicY.enabled = false;
-        gageY.transform.localScale = new Vector3(0, 1, 1);
+        gageX.enabled = true;
+        gageY.enabled = false;
 
         timeupText.gameObject.SetActive(false);
 
@@ -115,21 +110,12 @@ public class GameManager : MonoBehaviour
     private void UpdateX()
     {
         UpdateTimer();
-
-        Vector3 scale = gageX.transform.localScale;
-        scale.x = gageLogicX.Power / 100f;  // X方向のスケールを変更
-        gageX.transform.localScale = scale;
     }
 
     // 更新：縦パワー
     private void UpdateY()
     {
         UpdateTimer();
-
-        Vector3 scale = gageY.transform.localScale;
-        scale.x = gageLogicY.Power / 100f;  // X方向のスケールを変更
-        gageY.transform.localScale = scale;
-
     }
 
     // 更新：飛行中
@@ -178,19 +164,19 @@ public class GameManager : MonoBehaviour
     // 横パワーの決定
     private void OnClickX()
     {
-        gageLogicX.enabled = false;
-        gageLogicY.enabled = true;
+        gageX.enabled = false;
+        gageY.enabled = true;
         _mode = Mode.MODE_Y;
     }
 
     // 縦パワーの決定
     private void OnClickY()
     {
-        gageLogicY.enabled = false;
+        gageY.enabled = false;
         _mode = Mode.MODE_FLYING;
 
         // ボールを蹴る
-        ball.Kick(gageLogicX.Power, gageLogicY.Power);
+        ball.Kick(gageX.Power, gageY.Power);
 
         // 滞空時間テキストを ON
         flyingTimeText.gameObject.SetActive(true);
@@ -222,9 +208,6 @@ public class GameManager : MonoBehaviour
     // リセット
     private void Reset()
     {
-        var initScale = new Vector3(0, 1, 1);
-        gageX.transform.localScale = initScale;
-        gageY.transform.localScale = initScale;
         ball.Reset();
         target.ResetPosition();
 
@@ -235,11 +218,11 @@ public class GameManager : MonoBehaviour
 
         _mode = Mode.MODE_X;
 
-        gageLogicX.enabled = true;
-        gageLogicX.Reset();
+        gageX.enabled = true;
+        gageX.Reset();
 
-        gageLogicY.enabled = false;
-        gageLogicY.Reset();
+        gageY.enabled = false;
+        gageY.Reset();
     }
 
     // スコアテキストの更新
