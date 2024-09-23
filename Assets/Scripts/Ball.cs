@@ -7,6 +7,7 @@ public class Ball : MonoBehaviour
 {
     public UnityEvent OnGround;  // ボールが地面についた時のイベント
     public UnityEvent OnTarget;  // ボールが的に当たった時のイベント
+    public VariablesSO variables;  // ゲーム内変数
 
     public float forceMultiplierX = 10.0f;  // 力の倍率X
     public float forceMultiplierY = 10.0f;  // 力の倍率Y
@@ -35,6 +36,9 @@ public class Ball : MonoBehaviour
     {
         if (!_isGround && !_isHit)
         {
+            // 風の影響を受ける
+            ApplyWind();
+
             // 滞空時間の更新
             _flyingTime += Time.deltaTime;
         }
@@ -60,12 +64,11 @@ public class Ball : MonoBehaviour
         _isGround = false;
     }
 
-    // ボールに風の影響を与える
-    public void AddWind(float wind)
+    // 風の影響を適用する
+    private void ApplyWind()
     {
-        Vector3 force = new Vector3(wind * windMultiplier, 0, 0);
+        Vector3 force = new Vector3(variables.wind * windMultiplier, 0, 0);
         _rigidbody.AddForce(force, ForceMode.Force);
-
     }
 
     // ボールを開始時の位置にリセットする関数

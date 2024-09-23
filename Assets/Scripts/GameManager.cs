@@ -47,10 +47,6 @@ public class GameManager : MonoBehaviour
     // 更新
     void Update()
     {
-        switch(_mode)
-        {
-            case Mode.MODE_FLYING: UpdateFlying(); break;
-        }
     }
 
     // ボタンが押されたときに外部から呼ばれる
@@ -103,13 +99,6 @@ public class GameManager : MonoBehaviour
         _mode = Mode.MODE_TIMEUP;
 
         StartCoroutine(GotoResultAfterWait());  // コルーチンの開始
-    }
-
-    // 更新：飛行中
-    private void UpdateFlying()
-    {
-        // ボールに風の影響を与える
-        ball.AddWind(variables.wind);
     }
 
     // コルーチン：waitSecTimeup だけ待ってからリザルトへ移行する
