@@ -565,6 +565,7 @@ GameObject:
   - component: {fileID: 273377782}
   - component: {fileID: 273377784}
   - component: {fileID: 273377783}
+  - component: {fileID: 273377785}
   m_Layer: 5
   m_Name: ScoreText
   m_TagString: Untagged
@@ -688,6 +689,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 273377781}
   m_CullTransparentMesh: 1
+--- !u!114 &273377785
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 273377781}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c629902620968b4697790aa05db2025, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  variables: {fileID: 11400000, guid: 877ab5bf860bd884d8af475526368e91, type: 2}
 --- !u!1 &291717416
 GameObject:
   m_ObjectHideFlags: 0
@@ -1070,6 +1084,7 @@ MonoBehaviour:
   flyingTimeText: {fileID: 1973613954}
   timeupText: {fileID: 1178585621}
   config: {fileID: 11400000, guid: 49418b2947496ae4f876d52873079612, type: 2}
+  variables: {fileID: 11400000, guid: 877ab5bf860bd884d8af475526368e91, type: 2}
 --- !u!4 &555958496
 Transform:
   m_ObjectHideFlags: 0
@@ -2190,7 +2205,6 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   config: {fileID: 11400000, guid: 49418b2947496ae4f876d52873079612, type: 2}
-  timeMax: 30
   _time: 0
 --- !u!4 &1601799874
 Transform:

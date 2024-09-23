@@ -25,22 +25,21 @@ public class GameManager : MonoBehaviour
     public Ball ball;
     public Target target;
     public TextMeshProUGUI hitText;  // Hit テキスト
-    public TextMeshProUGUI scoreText;  // スコアテキスト
     public TextMeshProUGUI windText;  // 風速テキスト
     public TextMeshProUGUI flyingTimeText;  // 滞空時間テキスト
     public TextMeshProUGUI timeupText;  // 時間切れテキスト
     public ConfigSO config;  // ゲーム設定
+    public VariablesSO variables;  // ゲーム変数
 
     // 非公開パラメータ
     private Mode _mode;  // ゲームモード
-    private int _score;  // スコア
     private int _wind; // 風力
 
     // 開始
     void Start()
     {
         _mode = Mode.MODE_X;
-        _score = 0;
+        variables.score = 0;
         _wind = Random.Range(-10, 10);
 
         gageX.enabled = true;
@@ -50,7 +49,6 @@ public class GameManager : MonoBehaviour
         timeupText.gameObject.SetActive(false);
 
         UpdateWindText();
-        UpdateScoreText();
     }
 
     // 更新
@@ -130,7 +128,7 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(config.waitSecTimeup);
 
         // スコアを保存
-        PlayerPrefs.SetInt("Score", _score);
+        PlayerPrefs.SetInt("Score", variables.score);
         PlayerPrefs.Save();
 
         // リザルトシーンへ遷移
@@ -176,8 +174,7 @@ public class GameManager : MonoBehaviour
         hitText.gameObject.SetActive(false);  // テキストを非アクティブに
 
         // 滞空時間をスコアに加算
-        _score += (int)(ball.FlyingTime * 10f);
-        UpdateScoreText();
+        variables.score += (int)(ball.FlyingTime * 10f);
 
         Reset();
     }
@@ -202,12 +199,6 @@ public class GameManager : MonoBehaviour
         gageY.Reset();
 
         timer.enabled = true;
-    }
-
-    // スコアテキストの更新
-    private void UpdateScoreText()
-    {
-        scoreText.text = "Score: " + _score;
     }
 
     // 風テキストの更新
