@@ -6,7 +6,7 @@ using UnityEngine.Events;
 public class Timer : MonoBehaviour
 {
     public UnityEvent OnTimeup;
-    public float timeMax = 30.0f;  // §ŒÀŠÔ
+    public ConfigSO config;
 
     [SerializeField] private float _time;  // c‚èŠÔ
 
@@ -14,7 +14,7 @@ public class Timer : MonoBehaviour
 
     void Start()
     {
-        _time = timeMax;
+        _time = config.timeMax;
     }
 
     void Update()

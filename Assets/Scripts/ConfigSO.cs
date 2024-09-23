@@ -15,4 +15,7 @@ public class ConfigSO : ScriptableObject
 
     [Header("時間切れ表示のウェイトタイム")]
     public float waitSecTimeup = 2.0f;
+
+    [Header("制限時間")]
+    public float timeMax = 30.0f;
 }
