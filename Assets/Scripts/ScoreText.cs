@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class ScoreUI : MonoBehaviour
+public class ScoreText : MonoBehaviour
 {
     public VariablesSO variables;  // ゲーム内変数
 

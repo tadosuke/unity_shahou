@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GageUI : MonoBehaviour
+public class GageText : MonoBehaviour
 {
     [SerializeField] private Gage model;
 
@@ -14,7 +14,7 @@ public class GageUI : MonoBehaviour
     void Update()
     {
         Vector3 scale = transform.localScale;
-        scale.x = model.Power / 100f;  // X•ûŒü‚ÌƒXƒP[ƒ‹‚ğ•ÏX
+        scale.x = model.Power / 100f;  // Xï¿½ï¿½ï¿½ï¿½ï¿½ÌƒXï¿½Pï¿½[ï¿½ï¿½ï¿½ï¿½ÏX
         transform.localScale = scale;
     }
 }

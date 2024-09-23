@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class TimerUI : MonoBehaviour
+public class WindText : MonoBehaviour
 {
-    [SerializeField] private Timer model;
+    public VariablesSO variables;  // ゲーム内変数
 
-    private TextMeshProUGUI _text;
+    private TextMeshProUGUI _text;  // 時間切れテキスト
 
     void Start()
     {
@@ -16,6 +16,6 @@ public class TimerUI : MonoBehaviour
 
     void Update()
     {
-        _text.text = $"Time: {(int)model.CurrentTime}";
+        _text.text = $"Wind: {variables.wind}";
     }
 }
