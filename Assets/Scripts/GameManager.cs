@@ -19,11 +19,11 @@ public class GameManager : MonoBehaviour
     }
 
     // 参照
-    public Gage gageX;
-    public Gage gageY;
-    public Timer timer;
-    public Ball ball;
-    public Target target;
+    public Gage gageX;  // 縦パワー
+    public Gage gageY;  // 横パワー
+    public Timer timer;  // タイマー
+    public Ball ball;  // ボール
+    public Target target;  // 的
     public ConfigSO config;  // ゲーム設定
     public VariablesSO variables;  // ゲーム変数
 
@@ -34,14 +34,16 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         _mode = Mode.MODE_X;
-        variables.score = 0;
-        variables.wind = Random.Range(-10, 10);
 
         gageX.enabled = true;
         gageY.enabled = false;
         timer.enabled = true;
 
+        variables.score = 0;
+        variables.wind = Random.Range(-10, 10);
         variables.showTimeupText = false;
+        variables.showHitText = false;
+        variables.showFlyingTimeText = false;
     }
 
     // 更新
@@ -70,7 +72,7 @@ public class GameManager : MonoBehaviour
         timer.enabled = false;
         _mode = Mode.MODE_OUT;
 
-        StartCoroutine(ResetAfterWait());  // コルーチンの開始
+        StartCoroutine(GroundCoroutine());  // コルーチンの開始
     }
 
     // ボールが的と衝突したときに呼ばれる
@@ -84,7 +86,7 @@ public class GameManager : MonoBehaviour
         timer.enabled = false;
         _mode = Mode.MODE_HIT;
 
-        StartCoroutine(ShowHitText());  // テキスト表示コルーチンを呼ぶ
+        StartCoroutine(HitCoroutine());  // テキスト表示コルーチンを呼ぶ
     }
 
     // 時間切れ時に呼ばれる
@@ -98,20 +100,7 @@ public class GameManager : MonoBehaviour
         variables.showTimeupText = true;
         _mode = Mode.MODE_TIMEUP;
 
-        StartCoroutine(GotoResultAfterWait());  // コルーチンの開始
-    }
-
-    // コルーチン：waitSecTimeup だけ待ってからリザルトへ移行する
-    private IEnumerator GotoResultAfterWait()
-    {
-        yield return new WaitForSeconds(config.waitSecTimeup);
-
-        // スコアを保存
-        PlayerPrefs.SetInt("Score", variables.score);
-        PlayerPrefs.Save();
-
-        // リザルトシーンへ遷移
-        SceneManager.LoadScene("ResultScene");
+        StartCoroutine(TimeupCoroutine());  // コルーチンの開始
     }
 
     // 横パワーの決定
@@ -136,16 +125,16 @@ public class GameManager : MonoBehaviour
         variables.showFlyingTimeText = true;
     }
 
-    // コルーチン：waitSecGround だけ待ってからリセット
-    private IEnumerator ResetAfterWait()
+    // コルーチン：地面に衝突したとき
+    private IEnumerator GroundCoroutine()
     {
         yield return new WaitForSeconds(config.waitSecGround);
 
         Reset();
     }
 
-    // コルーチン：Hit テキストを表示する
-    private IEnumerator ShowHitText()
+    // コルーチン：Hit したとき
+    private IEnumerator HitCoroutine()
     {
         variables.showHitText = true;
         yield return new WaitForSeconds(config.waitSecHit);
@@ -156,6 +145,19 @@ public class GameManager : MonoBehaviour
         variables.score += (int)(ball.FlyingTime * 10f);
 
         Reset();
+    }
+
+    // コルーチン：時間切れになったとき
+    private IEnumerator TimeupCoroutine()
+    {
+        yield return new WaitForSeconds(config.waitSecTimeup);
+
+        // スコアを保存
+        PlayerPrefs.SetInt("Score", variables.score);
+        PlayerPrefs.Save();
+
+        // リザルトシーンへ遷移
+        SceneManager.LoadScene("ResultScene");
     }
 
     // リセット
