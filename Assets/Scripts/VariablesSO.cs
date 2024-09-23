@@ -5,4 +5,7 @@ public class VariablesSO : ScriptableObject
 {
     [Header("ƒXƒRƒA")]
     public int score = 0;
+
+    [Header("•—‚Ì‹­‚³")]
+    public int wind = 0;
 }

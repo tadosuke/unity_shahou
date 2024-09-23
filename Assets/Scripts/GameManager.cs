@@ -25,7 +25,6 @@ public class GameManager : MonoBehaviour
     public Ball ball;
     public Target target;
     public TextMeshProUGUI hitText;  // Hit テキスト
-    public TextMeshProUGUI windText;  // 風速テキスト
     public TextMeshProUGUI flyingTimeText;  // 滞空時間テキスト
     public TextMeshProUGUI timeupText;  // 時間切れテキスト
     public ConfigSO config;  // ゲーム設定
@@ -33,22 +32,19 @@ public class GameManager : MonoBehaviour
 
     // 非公開パラメータ
     private Mode _mode;  // ゲームモード
-    private int _wind; // 風力
 
     // 開始
     void Start()
     {
         _mode = Mode.MODE_X;
         variables.score = 0;
-        _wind = Random.Range(-10, 10);
+        variables.wind = Random.Range(-10, 10);
 
         gageX.enabled = true;
         gageY.enabled = false;
         timer.enabled = true;
 
         timeupText.gameObject.SetActive(false);
-
-        UpdateWindText();
     }
 
     // 更新
@@ -116,7 +112,7 @@ public class GameManager : MonoBehaviour
     private void UpdateFlying()
     {
         // ボールに風の影響を与える
-        ball.AddWind(_wind);
+        ball.AddWind(variables.wind);
 
         // 滞空時間テキストの更新
         flyingTimeText.text = "+" + (int)(ball.FlyingTime * 10f);
@@ -185,8 +181,7 @@ public class GameManager : MonoBehaviour
         ball.Reset();
         target.ResetPosition();
 
-        _wind = Random.Range(-10, 10);
-        UpdateWindText();
+        variables.wind = Random.Range(-10, 10);
 
         flyingTimeText.gameObject.SetActive(false);
 
@@ -200,11 +195,4 @@ public class GameManager : MonoBehaviour
 
         timer.enabled = true;
     }
-
-    // 風テキストの更新
-    private void UpdateWindText()
-    {
-        windText.text = "Wind: " + _wind;
-    }
-
 }
