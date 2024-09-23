@@ -808,6 +808,40 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 291717416}
   m_CullTransparentMesh: 1
+--- !u!1 &296063453
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 296063454}
+  m_Layer: 0
+  m_Name: Logics
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &296063454
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 296063453}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.6885171, y: 6.601631, z: 6.3976116}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 555958496}
+  - {fileID: 650648497}
+  - {fileID: 1204258009}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &484289287
 GameObject:
   m_ObjectHideFlags: 0
@@ -1010,21 +1044,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5114db94db73cad4ba30346967e76b71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gageLogicX: {fileID: 650648498}
+  gageLogicY: {fileID: 1204258008}
   gageX: {fileID: 2029460504}
   gageY: {fileID: 820619497}
-  gageSpeed: 50
   ball: {fileID: 671729671}
   target: {fileID: 1382128437}
-  waitSecGround: 2
-  waitSecHit: 2
-  waitSecTimeup: 2
-  time: 30
   hitText: {fileID: 291717418}
   scoreText: {fileID: 273377783}
   windText: {fileID: 182139057}
   flyingTimeText: {fileID: 1973613954}
   timeText: {fileID: 231748566}
   timeupText: {fileID: 1178585621}
+  gageSpeed: 50
+  waitSecGround: 2
+  waitSecHit: 2
+  waitSecTimeup: 2
+  time: 30
 --- !u!4 &555958496
 Transform:
   m_ObjectHideFlags: 0
@@ -1033,13 +1069,59 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 555958494}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 6.96, z: -16.35}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 296063454}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &650648496
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 650648497}
+  - component: {fileID: 650648498}
+  m_Layer: 0
+  m_Name: GageX
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &650648497
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 650648496}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 296063454}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &650648498
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 650648496}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed02ac00af7b54f4d8fb9074296423a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gageSpeed: 50
+  _power: 0
 --- !u!1001 &671729669
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1848,6 +1930,52 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1178585619}
   m_CullTransparentMesh: 1
+--- !u!1 &1204258007
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1204258009}
+  - component: {fileID: 1204258008}
+  m_Layer: 0
+  m_Name: GageY
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1204258008
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1204258007}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed02ac00af7b54f4d8fb9074296423a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gageSpeed: 50
+  _power: 0
+--- !u!4 &1204258009
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1204258007}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 296063454}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1382128432 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 798768750113850354, guid: 677ba3c265fdb454a8df4edfe4ddbdd8, type: 3}
@@ -2286,8 +2414,8 @@ SceneRoots:
   - {fileID: 963194228}
   - {fileID: 705507995}
   - {fileID: 549096889}
-  - {fileID: 555958496}
   - {fileID: 5138037196626527869}
   - {fileID: 671729669}
+  - {fileID: 296063454}
   - {fileID: 1440415872}
   - {fileID: 484289290}

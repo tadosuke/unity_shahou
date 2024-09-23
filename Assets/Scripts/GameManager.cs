@@ -19,6 +19,8 @@ public class GameManager : MonoBehaviour
     }
 
     // 参照
+    public Gage gageLogicX;
+    public Gage gageLogicY;
     public Image gageX;
     public Image gageY;
     public Ball ball;
@@ -31,30 +33,30 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI timeupText;  // 時間切れテキスト
 
     // 公開パラメータ
-    public float gageSpeed = 1.0f;  // ゲージの増加スピード
+    public float gageSpeed = 50.0f;  // ゲージの増加スピード
     public float waitSecGround = 2.0f; // ボールが地面に接地した時のウェイトタイム
     public float waitSecHit = 2.0f; // ボールが的に当たった時のウェイトタイム
     public float waitSecTimeup = 2.0f; // 時間切れ表示のウェイトタイム
-    public float time;  // 残り時間
+    public float time = 30.0f;  // 残り時間
 
     // 非公開パラメータ
     private Mode _mode = 0;  // ゲームモード
-    private float _powerX;  // Xパワー
-    private float _powerY;  // Yパワー
     private int _score;  // スコア
     private int _wind; // 風力
 
     // 開始
     void Start()
     {
-        _mode = 0;
+        _mode = Mode.MODE_X;
         _score = 0;
-        _powerX = 0f;
-        _powerY = 0f;
         _wind = Random.Range(-10, 10);
 
+        gageLogicX.enabled = true;
         gageX.transform.localScale = new Vector3(0, 1, 1);
+
+        gageLogicY.enabled = false;
         gageY.transform.localScale = new Vector3(0, 1, 1);
+
         timeupText.gameObject.SetActive(false);
 
         UpdateWindText();
@@ -112,32 +114,20 @@ public class GameManager : MonoBehaviour
     // 更新：横パワー
     private void UpdateX()
     {
-        _powerX += gageSpeed * Time.deltaTime;
-        if (100f < _powerX)
-        {
-            _powerX = 0f;
-        }
-
         UpdateTimer();
 
         Vector3 scale = gageX.transform.localScale;
-        scale.x = _powerX / 100f;  // X方向のスケールを変更
+        scale.x = gageLogicX.Power / 100f;  // X方向のスケールを変更
         gageX.transform.localScale = scale;
     }
 
     // 更新：縦パワー
     private void UpdateY()
     {
-        _powerY += gageSpeed * Time.deltaTime;
-        if (100f < _powerY)
-        {
-            _powerY = 0f;
-        }
-
         UpdateTimer();
 
         Vector3 scale = gageY.transform.localScale;
-        scale.x = _powerY / 100f;  // X方向のスケールを変更
+        scale.x = gageLogicY.Power / 100f;  // X方向のスケールを変更
         gageY.transform.localScale = scale;
 
     }
@@ -188,16 +178,19 @@ public class GameManager : MonoBehaviour
     // 横パワーの決定
     private void OnClickX()
     {
+        gageLogicX.enabled = false;
+        gageLogicY.enabled = true;
         _mode = Mode.MODE_Y;
     }
 
     // 縦パワーの決定
     private void OnClickY()
     {
+        gageLogicY.enabled = false;
         _mode = Mode.MODE_FLYING;
 
         // ボールを蹴る
-        ball.Kick(_powerX, _powerY);
+        ball.Kick(gageLogicX.Power, gageLogicY.Power);
 
         // 滞空時間テキストを ON
         flyingTimeText.gameObject.SetActive(true);
@@ -229,8 +222,6 @@ public class GameManager : MonoBehaviour
     // リセット
     private void Reset()
     {
-        _powerX = 0f;
-        _powerY = 0f;
         var initScale = new Vector3(0, 1, 1);
         gageX.transform.localScale = initScale;
         gageY.transform.localScale = initScale;
@@ -243,6 +234,12 @@ public class GameManager : MonoBehaviour
         flyingTimeText.gameObject.SetActive(false);
 
         _mode = Mode.MODE_X;
+
+        gageLogicX.enabled = true;
+        gageLogicX.Reset();
+
+        gageLogicY.enabled = false;
+        gageLogicY.Reset();
     }
 
     // スコアテキストの更新
