@@ -26,7 +26,6 @@ public class GameManager : MonoBehaviour
     public Target target;
     public TextMeshProUGUI hitText;  // Hit テキスト
     public TextMeshProUGUI flyingTimeText;  // 滞空時間テキスト
-    public TextMeshProUGUI timeupText;  // 時間切れテキスト
     public ConfigSO config;  // ゲーム設定
     public VariablesSO variables;  // ゲーム変数
 
@@ -44,7 +43,7 @@ public class GameManager : MonoBehaviour
         gageY.enabled = false;
         timer.enabled = true;
 
-        timeupText.gameObject.SetActive(false);
+        variables.showTimeupText = false;
     }
 
     // 更新
@@ -102,7 +101,7 @@ public class GameManager : MonoBehaviour
         timer.enabled = false;
 
         // 時間切れテキストの表示
-        timeupText.gameObject.SetActive(true);
+        variables.showTimeupText = true;
         _mode = Mode.MODE_TIMEUP;
 
         StartCoroutine(GotoResultAfterWait());  // コルーチンの開始

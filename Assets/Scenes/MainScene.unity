@@ -578,8 +578,8 @@ GameObject:
   m_Component:
   - component: {fileID: 273377782}
   - component: {fileID: 273377784}
-  - component: {fileID: 273377783}
   - component: {fileID: 273377785}
+  - component: {fileID: 273377783}
   m_Layer: 5
   m_Name: ScoreText
   m_TagString: Untagged
@@ -1094,7 +1094,6 @@ MonoBehaviour:
   target: {fileID: 1382128437}
   hitText: {fileID: 291717418}
   flyingTimeText: {fileID: 1973613954}
-  timeupText: {fileID: 1178585621}
   config: {fileID: 11400000, guid: 49418b2947496ae4f876d52873079612, type: 2}
   variables: {fileID: 11400000, guid: 877ab5bf860bd884d8af475526368e91, type: 2}
 --- !u!4 &555958496
@@ -1857,13 +1856,14 @@ GameObject:
   - component: {fileID: 1178585620}
   - component: {fileID: 1178585622}
   - component: {fileID: 1178585621}
+  - component: {fileID: 1178585623}
   m_Layer: 5
   m_Name: TimeUpText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1178585620
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1890,7 +1890,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1178585619}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
@@ -1980,6 +1980,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1178585619}
   m_CullTransparentMesh: 1
+--- !u!114 &1178585623
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1178585619}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39fe840543569924d9300d91844a004b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  variables: {fileID: 11400000, guid: 877ab5bf860bd884d8af475526368e91, type: 2}
 --- !u!1 &1204258007
 GameObject:
   m_ObjectHideFlags: 0

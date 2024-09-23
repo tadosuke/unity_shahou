@@ -16,3 +16,4 @@ MonoBehaviour:
   waitSecGround: 2
   waitSecHit: 2
   waitSecTimeup: 2
+  timeMax: 2
