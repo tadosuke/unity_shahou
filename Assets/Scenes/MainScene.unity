@@ -1106,7 +1106,6 @@ MonoBehaviour:
   timer: {fileID: 1601799873}
   ball: {fileID: 671729671}
   target: {fileID: 1382128437}
-  flyingTimeText: {fileID: 1973613954}
   config: {fileID: 11400000, guid: 49418b2947496ae4f876d52873079612, type: 2}
   variables: {fileID: 11400000, guid: 877ab5bf860bd884d8af475526368e91, type: 2}
 --- !u!4 &555958496
@@ -1299,6 +1298,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  variables: {fileID: 11400000, guid: 877ab5bf860bd884d8af475526368e91, type: 2}
   forceMultiplierX: 0.6
   forceMultiplierY: 0.5
   windMultiplier: 0.3
@@ -2165,7 +2165,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 1
-  m_AdditionalShaderChannelsFlag: 25
+  m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
@@ -2407,6 +2407,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   variables: {fileID: 11400000, guid: 877ab5bf860bd884d8af475526368e91, type: 2}
+  ball: {fileID: 671729671}
 --- !u!1 &2029460502
 GameObject:
   m_ObjectHideFlags: 0
