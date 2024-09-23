@@ -1068,7 +1068,6 @@ MonoBehaviour:
   scoreText: {fileID: 273377783}
   windText: {fileID: 182139057}
   flyingTimeText: {fileID: 1973613954}
-  timeText: {fileID: 231748566}
   timeupText: {fileID: 1178585621}
   config: {fileID: 11400000, guid: 49418b2947496ae4f876d52873079612, type: 2}
 --- !u!4 &555958496
@@ -1131,7 +1130,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   config: {fileID: 11400000, guid: 49418b2947496ae4f876d52873079612, type: 2}
-  gageSpeed: 50
   _power: 0
 --- !u!1001 &671729669
 PrefabInstance:
@@ -1984,8 +1982,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed02ac00af7b54f4d8fb9074296423a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  config: {fileID: 0}
-  gageSpeed: 50
+  config: {fileID: 11400000, guid: 49418b2947496ae4f876d52873079612, type: 2}
   _power: 0
 --- !u!4 &1204258009
 Transform:

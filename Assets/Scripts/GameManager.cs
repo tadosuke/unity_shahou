@@ -28,7 +28,6 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI scoreText;  // スコアテキスト
     public TextMeshProUGUI windText;  // 風速テキスト
     public TextMeshProUGUI flyingTimeText;  // 滞空時間テキスト
-    public TextMeshProUGUI timeText;  // 残り時間テキスト
     public TextMeshProUGUI timeupText;  // 時間切れテキスト
     public ConfigSO config;  // ゲーム設定
 
